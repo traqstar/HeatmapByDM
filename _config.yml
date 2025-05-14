@@ -1,8 +1,16 @@
-# _config.yml
+# Site settings
 title: HeatmapByDM
 baseurl: "/HeatmapByDM"
 url: "https://traqstar.github.io"
-theme: jekyll-theme-minimal
+
+# Theme settings
+remote_theme: daattali/beautiful-jekyll
+
+# Navbar settings
+navbar-brand-logo: smalllogo.jpg
+navbar-brand-text: HeatmapByDM
+navbar-links:
+  Home: "/"
 
 # Author settings
 author:
@@ -15,6 +23,18 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
+# Beautiful Jekyll specific settings
+navbar-col: "#FFFFFF"
+navbar-text-col: "#404040"
+navbar-border-col: "#DDDDDD"
+page-col: "#FFFFFF"
+text-col: "#404040"
+link-col: "#4CAF50"
+hover-col: "#0085A1"
+footer-col: "#F5F5F5"
+footer-text-col: "#777777"
+footer-link-col: "#404040"
+
 # Exclude from processing
 exclude:
   - Gemfile
@@ -22,4 +42,3 @@ exclude:
   - node_modules
   - vendor
   - .git
-  - README.md
