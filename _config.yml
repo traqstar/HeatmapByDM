@@ -1,6 +1,5 @@
 # Site settings
 title: HeatmapByDM
-description: A collection of interactive heatmaps and visualization tools for regional data analysis
 baseurl: "/HeatmapByDM"
 url: "https://traqstar.github.io"
 
