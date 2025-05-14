@@ -1,8 +1,5 @@
 # HeatmapByDM
 
-## Project Overview
-A collection of interactive heatmaps and visualization tools for regional data analysis. This repository contains various HTML-based heatmaps for different locations including Vista, Lynwood, Encinitas, and El Centro.
-
 ## Contents
 - **Regional Heatmaps**: Visualizations for multiple locations
 - **DSA Rankings**: Interactive wheel of rankings
@@ -23,7 +20,6 @@ A collection of interactive heatmaps and visualization tools for regional data a
 - HTML/CSS
 - JavaScript
 - GitHub Pages
-- Jekyll with Beautiful Jekyll theme
 
 ## Created By
 Kevin Kuhn & Carter B
