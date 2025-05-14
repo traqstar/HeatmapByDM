@@ -10,7 +10,7 @@ title: HeatMaps Index
     <style>
         body { font-family: Arial, sans-serif; text-align: center; }
         iframe { width: 83%; height: 1400px; border: 1px solid #ccc; display: block; margin: 30px auto 0 auto; }
-        nav { margin: 20px 0 40px 0; } /* Added 40px bottom margin for gap */
+        nav { margin: 20px 0 40px 0; }
         nav button { margin: 5px; padding: 10px 20px; font-size: 16px; }
         #welcome {
             display: flex;
@@ -47,24 +47,145 @@ title: HeatMaps Index
         .secret-button:focus {
             outline: none;
         }
+        #dm-selector {
+            margin: 20px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 250px;
+        }
+        #store-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .dsa-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-left: 20px;
+        }
     </style>
 </head>
 <body>
     <button class="home-button" onclick="goHome()">Home</button>
     <h1>HeatMaps - Regional Set</h1>
-    <nav>
-        <button onclick="loadPage('Vista 5.12.25 Heatmap.html')">Vista</button>
-        <button onclick="loadPage('Lynwood 5.12.25 Heat Map.html')">Lynwood</button>
-        <button onclick="loadPage('Encinitas 5.12.25 Heat Map.html')">Encinitas</button>
-        <button onclick="loadPage('EL Centro 5.12.25.html')">EL Centro</button>
-        <button onclick="loadPage('DSAWheelOFunMay25.html', true)">DSA Rankings</button>
-    </nav>
+    
+    <div id="dm-selection">
+        <label for="dm-selector">Select District Manager:</label>
+        <select id="dm-selector" onchange="loadDMStores()">
+            <option value="">-- Select DM --</option>
+            <!-- DM options will be loaded here -->
+        </select>
+    </div>
+    
+    <div id="store-buttons"></div>
+    
+    <button id="dsa-button" class="dsa-button" onclick="loadPage('DSAWheelOFunMay25.html', true)" style="display: none;">DSA Rankings</button>
+    
     <div id="welcome">
         <img src="https://static.cannawayz.com/static/brands/000/000/418/avatars/large/1541528123-1511815479-stiiizy.p__1_.jpg" alt="Stiiizy Logo" />
         <h2>HEATMAPS By <button class="secret-button" onclick="loadTetris()">KEVIN KUHN</button> (& Carter B)</h2>
     </div>
     <iframe id="contentFrame" src="" title="HeatMap Viewer" style="display:none;"></iframe>
+    
     <script>
+        // Store the DM data
+        let dmData = [];
+        
+        // Load the CSV file when the page loads
+        window.onload = function() {
+            loadDMData();
+        };
+        
+        // Function to load and parse the CSV file
+        function loadDMData() {
+            fetch('DMlist.csv')
+                .then(response => response.text())
+                .then(data => {
+                    // Parse CSV
+                    const rows = data.split('\n');
+                    const headers = rows[0].split(',');
+                    
+                    // Create DM data structure
+                    for (let i = 1; i < rows.length; i++) {
+                        if (rows[i].trim() === '') continue;
+                        
+                        const values = rows[i].split(',');
+                        const dmName = values[0].trim();
+                        const storeName = values[1].trim();
+                        
+                        // Check if DM already exists in our data
+                        let dmIndex = dmData.findIndex(dm => dm.name === dmName);
+                        
+                        if (dmIndex === -1) {
+                            // Add new DM
+                            dmData.push({
+                                name: dmName,
+                                stores: [storeName]
+                            });
+                        } else {
+                            // Add store to existing DM
+                            dmData[dmIndex].stores.push(storeName);
+                        }
+                    }
+                    
+                    // Populate the DM dropdown
+                    populateDMDropdown();
+                })
+                .catch(error => {
+                    console.error('Error loading DM data:', error);
+                    alert('Error loading DM data. Please check the console for details.');
+                });
+        }
+        
+        // Function to populate the DM dropdown
+        function populateDMDropdown() {
+            const selector = document.getElementById('dm-selector');
+            
+            dmData.forEach(dm => {
+                const option = document.createElement('option');
+                option.value = dm.name;
+                option.textContent = dm.name;
+                selector.appendChild(option);
+            });
+        }
+        
+        // Function to load stores for selected DM
+        function loadDMStores() {
+            const dmName = document.getElementById('dm-selector').value;
+            const storeButtonsDiv = document.getElementById('store-buttons');
+            const dsaButton = document.getElementById('dsa-button');
+            
+            // Clear existing buttons
+            storeButtonsDiv.innerHTML = '';
+            
+            if (dmName === '') {
+                dsaButton.style.display = 'none';
+                return;
+            }
+            
+            // Find the selected DM
+            const selectedDM = dmData.find(dm => dm.name === dmName);
+            
+            if (selectedDM) {
+                // Create buttons for each store
+                selectedDM.stores.forEach(store => {
+                    const button = document.createElement('button');
+                    button.textContent = store;
+                    button.onclick = function() {
+                        loadPage(`${store}.html`);
+                    };
+                    storeButtonsDiv.appendChild(button);
+                });
+                
+                // Show DSA Rankings button
+                dsaButton.style.display = 'inline-block';
+            }
+        }
+        
         function loadPage(page, isDSARankings = false) {
             document.getElementById('welcome').style.display = 'none';
             var iframe = document.getElementById('contentFrame');
@@ -84,6 +205,9 @@ title: HeatMaps Index
 
         function goHome() {
             document.getElementById('welcome').style.display = 'flex';
+            document.getElementById('dm-selector').value = '';
+            document.getElementById('store-buttons').innerHTML = '';
+            document.getElementById('dsa-button').style.display = 'none';
             var iframe = document.getElementById('contentFrame');
             iframe.style.display = 'none';
             iframe.src = '';
