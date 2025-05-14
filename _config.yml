@@ -1,14 +1,8 @@
-# Site settings
+# _config.yml
 title: HeatmapByDM
 baseurl: "/HeatmapByDM"
 url: "https://traqstar.github.io"
-
-# Theme settings
-remote_theme: niklasbuschmann/contrast
-theme_colors:
-  background: "#ffffff"
-  text: "#333333"
-  link: "#4CAF50"
+theme: jekyll-theme-minimal
 
 # Author settings
 author:
