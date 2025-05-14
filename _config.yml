@@ -1,3 +1,43 @@
-remote_theme: daattali/beautiful-jekyll
-title: HeatMaps Collection
+# Site settings
+title: HeatmapByDM
+description: A collection of interactive heatmaps and visualization tools for regional data analysis
+baseurl: "/HeatmapByDM"
+url: "https://traqstar.github.io"
+
+# Millennial theme settings
+remote_theme: LeNPaul/Millennial
 author: Kevin Kuhn
+tagline: Regional Heatmap Visualizations
+github_username: traqstar
+
+# Social media profiles
+social:
+  github: traqstar
+
+# Build settings
+markdown: kramdown
+permalink: /:title
+paginate: 5
+paginate_path: "/pages/page:num"
+
+# Collections
+collections:
+  heatmaps:
+    output: true
+    permalink: /:collection/:name
+
+# Plugins
+plugins:
+  - jekyll-remote-theme
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - README.md
