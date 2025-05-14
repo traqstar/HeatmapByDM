@@ -13,9 +13,13 @@
         }
         .header {
             background-color: #f8f9fa;
-            padding: 10px 0;
+            padding: 15px 0;
             border-bottom: 1px solid #e9ecef;
             margin-bottom: 20px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .header h1 {
             margin: 0;
@@ -23,86 +27,29 @@
         }
         .home-button {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 15px;
+            left: 15px;
             padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
             font-weight: bold;
-            border: none;
+            border: 2px solid #45a049;
             border-radius: 5px;
             text-decoration: none;
             cursor: pointer;
             font-size: 16px;
-            /* Cannabis leaf border effect */
-            box-shadow: 0 0 0 4px #4CAF50;
-            position: relative;
-            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0,100,0,0.3);
         }
         
-        /* Cannabis leaf border elements */
-        .home-button::before,
-        .home-button::after {
-            content: "";
-            position: absolute;
-            background-color: #4CAF50;
-            transition: all 0.3s ease;
-        }
-        
-        /* Top leaf */
+        /* Cannabis leaf icon next to HOME button */
         .home-button::before {
-            width: 12px;
-            height: 12px;
-            border-radius: 50% 50% 0 50%;
-            transform: rotate(45deg);
-            top: -10px;
-            left: calc(50% - 6px);
-        }
-        
-        /* Bottom leaf */
-        .home-button::after {
-            width: 12px;
-            height: 12px;
-            border-radius: 50% 50% 50% 0;
-            transform: rotate(-45deg);
-            bottom: -10px;
-            left: calc(50% - 6px);
-        }
-        
-        /* Left leaf */
-        .home-button .leaf-left {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background-color: #4CAF50;
-            border-radius: 50% 0 50% 50%;
-            transform: rotate(-45deg);
-            left: -10px;
-            top: calc(50% - 6px);
-        }
-        
-        /* Right leaf */
-        .home-button .leaf-right {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background-color: #4CAF50;
-            border-radius: 0 50% 50% 50%;
-            transform: rotate(45deg);
-            right: -10px;
-            top: calc(50% - 6px);
+            content: "🍁";
+            margin-right: 5px;
         }
         
         .home-button:hover {
             background-color: #45a049;
             transform: scale(1.05);
-        }
-        
-        .home-button:hover::before,
-        .home-button:hover::after,
-        .home-button:hover .leaf-left,
-        .home-button:hover .leaf-right {
-            background-color: #45a049;
         }
         
         .container {
@@ -148,13 +95,15 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            margin: 20px 0;
+            margin: 20px auto;
+            display: block;
+            width: 200px;
         }
         .dsa-button:hover {
             background-color: #45a049;
         }
         #welcome {
-            margin: 50px 0;
+            margin: 30px 0;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -184,23 +133,40 @@
             color: #6c757d;
             font-size: 14px;
         }
+        
+        /* Fix for the Stiiizy image and DSA button overlap */
+        #welcome-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 50px; /* Add space below welcome section */
+        }
+        
+        /* Logo in header */
+        .site-logo {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        /* Clear separation between elements */
+        .section {
+            margin-bottom: 30px;
+            clear: both;
+        }
     </style>
 </head>
 <body>
     <div class="header">
+        <button class="home-button" onclick="goHome()">HOME</button>
+        <img src="smalllogo.jpg" alt="Site Logo" class="site-logo" height="40">
         <h1>HeatmapByDM</h1>
-        <button class="home-button" onclick="goHome()">
-            HOME
-            <span class="leaf-left"></span>
-            <span class="leaf-right"></span>
-        </button>
     </div>
 
     <div class="container">
         <h1>HeatMaps Index</h1>
         <h2>HeatMaps - Regional Set</h2>
         
-        <div class="selection-area">
+        <div class="section selection-area">
             <label for="dm-selector">Select District Manager:</label>
             <select id="dm-selector" onchange="loadDMStores()">
                 <option value="">-- Select DM --</option>
@@ -208,13 +174,17 @@
             </select>
         </div>
         
-        <div id="store-buttons"></div>
+        <div id="store-buttons" class="section"></div>
         
-        <button id="dsa-button" class="dsa-button" onclick="loadPage('DSAWheelOFunMay25.html', true)" style="display: none;">DSA Rankings</button>
+        <div class="section">
+            <button id="dsa-button" class="dsa-button" onclick="loadPage('DSAWheelOFunMay25.html', true)" style="display: none;">DSA Rankings</button>
+        </div>
         
-        <div id="welcome">
-            <img src="https://static.cannawayz.com/static/brands/000/000/418/avatars/large/1541528123-1511815479-stiiizy.p__1_.jpg" alt="Stiiizy Logo">
-            <h2>HEATMAPS By <button class="secret-button" onclick="loadTetris()">KEVIN KUHN</button> (& Carter B)</h2>
+        <div id="welcome-container" class="section">
+            <div id="welcome">
+                <img src="https://static.cannawayz.com/static/brands/000/000/418/avatars/large/1541528123-1511815479-stiiizy.p__1_.jpg" alt="Stiiizy Logo">
+                <h2>HEATMAPS By <button class="secret-button" onclick="loadTetris()">KEVIN KUHN</button> (& Carter B)</h2>
+            </div>
         </div>
         
         <iframe id="contentFrame" src="" style="display:none;"></iframe>
@@ -326,7 +296,7 @@
         }
         
         function loadPage(page, isDSARankings = false) {
-            document.getElementById('welcome').style.display = 'none';
+            document.getElementById('welcome-container').style.display = 'none';
             var iframe = document.getElementById('contentFrame');
             iframe.style.display = 'block';
             
@@ -343,7 +313,7 @@
         }
 
         function goHome() {
-            document.getElementById('welcome').style.display = 'flex';
+            document.getElementById('welcome-container').style.display = 'block';
             document.getElementById('dm-selector').value = '';
             document.getElementById('store-buttons').innerHTML = '';
             document.getElementById('dsa-button').style.display = 'none';
@@ -353,7 +323,7 @@
         }
 
         function loadTetris() {
-            document.getElementById('welcome').style.display = 'none';
+            document.getElementById('welcome-container').style.display = 'none';
             var iframe = document.getElementById('contentFrame');
             iframe.style.display = 'block';
             iframe.style.width = '100%';
