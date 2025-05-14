@@ -13,6 +13,8 @@ title: HeatMaps Index
             text-align: center;
             margin: 0;
             padding: 0;
+            background-color: #fff;
+            color: #333;
         }
         .container {
             width: 100%;
@@ -34,15 +36,15 @@ title: HeatMaps Index
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 600px;
+            height: 400px; /* Reduced height to decrease space */
         }
         #welcome img {
-            max-width: 600px;
-            margin-bottom: 30px;
+            max-width: 400px; /* Reduced image size */
+            margin-bottom: 20px; /* Reduced margin */
         }
         #welcome h2 {
-            font-size: 2em;
-            margin: 0;
+            font-size: 1.8em;
+            margin: 0 0 20px 0; /* Added bottom margin */
         }
         .home-button {
             position: fixed;
@@ -51,6 +53,10 @@ title: HeatMaps Index
             padding: 10px 20px;
             font-size: 16px;
             z-index: 1000;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
         .secret-button {
             background: none;
@@ -69,6 +75,7 @@ title: HeatMaps Index
             padding: 10px;
             font-size: 16px;
             width: 250px;
+            border: 1px solid #ccc;
         }
         #store-buttons {
             display: flex;
@@ -77,6 +84,16 @@ title: HeatMaps Index
             gap: 10px;
             margin-bottom: 20px;
         }
+        #store-buttons button {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #store-buttons button:hover {
+            background-color: #e8e8e8;
+        }
         .dsa-button {
             background-color: #4CAF50;
             color: white;
@@ -84,6 +101,9 @@ title: HeatMaps Index
             font-size: 16px;
             margin: 20px auto;
             display: block;
+            border: none;
+            cursor: pointer;
+            width: 200px;
         }
         .content-area {
             width: 100%;
@@ -94,6 +114,9 @@ title: HeatMaps Index
             margin: 20px auto;
             width: 100%;
             text-align: center;
+        }
+        h1, h2 {
+            color: #333;
         }
     </style>
 </head>
@@ -227,7 +250,7 @@ title: HeatMaps Index
                 iframe.style.width = '1400px';
                 iframe.style.height = '1400px';
             } else {
-                iframe.style.width = '1000px';
+                iframe.style.width = '950px';
                 iframe.style.height = '1400px';
             }
             
@@ -248,8 +271,8 @@ title: HeatMaps Index
             document.getElementById('welcome').style.display = 'none';
             var iframe = document.getElementById('contentFrame');
             iframe.style.display = 'block';
-            iframe.style.width = '90%';
-            iframe.style.height = '1300px';
+            iframe.style.width = '100%';
+            iframe.style.height = '1000px';
             iframe.src = 'STIIIZYtetris.html';
         }
     </script>
