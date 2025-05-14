@@ -8,8 +8,25 @@ title: HeatMaps Index
 <head>
     <title>HeatMaps Index</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        iframe { width: 83%; height: 1400px; border: 1px solid #ccc; display: block; margin: 30px auto 0 auto; }
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        iframe { 
+            width: 90%; 
+            height: 1400px; 
+            border: 1px solid #ccc; 
+            display: block; 
+            margin: 30px auto 0 auto; 
+        }
         nav { margin: 20px 0 40px 0; }
         nav button { margin: 5px; padding: 10px 20px; font-size: 16px; }
         #welcome {
@@ -65,31 +82,46 @@ title: HeatMaps Index
             color: white;
             padding: 10px 20px;
             font-size: 16px;
-            margin-left: 20px;
+            margin: 20px auto;
+            display: block;
+        }
+        .content-area {
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .selection-area {
+            margin: 20px auto;
+            width: 100%;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="goHome()">Home</button>
-    <h1>HeatMaps - Regional Set</h1>
-    
-    <div id="dm-selection">
-        <label for="dm-selector">Select District Manager:</label>
-        <select id="dm-selector" onchange="loadDMStores()">
-            <option value="">-- Select DM --</option>
-            <!-- DM options will be loaded here -->
-        </select>
+    <div class="container">
+        <button class="home-button" onclick="goHome()">Home</button>
+        <div class="content-area">
+            <h1>HeatMaps - Regional Set</h1>
+            
+            <div class="selection-area">
+                <label for="dm-selector">Select District Manager:</label>
+                <select id="dm-selector" onchange="loadDMStores()">
+                    <option value="">-- Select DM --</option>
+                    <!-- DM options will be loaded here -->
+                </select>
+            </div>
+            
+            <div id="store-buttons"></div>
+            
+            <button id="dsa-button" class="dsa-button" onclick="loadPage('DSAWheelOFunMay25.html', true)" style="display: none;">DSA Rankings</button>
+            
+            <div id="welcome">
+                <img src="https://static.cannawayz.com/static/brands/000/000/418/avatars/large/1541528123-1511815479-stiiizy.p__1_.jpg" alt="Stiiizy Logo" />
+                <h2>HEATMAPS By <button class="secret-button" onclick="loadTetris()">KEVIN KUHN</button> (& Carter B)</h2>
+            </div>
+            <iframe id="contentFrame" src="" title="HeatMap Viewer" style="display:none;"></iframe>
+        </div>
     </div>
-    
-    <div id="store-buttons"></div>
-    
-    <button id="dsa-button" class="dsa-button" onclick="loadPage('DSAWheelOFunMay25.html', true)" style="display: none;">DSA Rankings</button>
-    
-    <div id="welcome">
-        <img src="https://static.cannawayz.com/static/brands/000/000/418/avatars/large/1541528123-1511815479-stiiizy.p__1_.jpg" alt="Stiiizy Logo" />
-        <h2>HEATMAPS By <button class="secret-button" onclick="loadTetris()">KEVIN KUHN</button> (& Carter B)</h2>
-    </div>
-    <iframe id="contentFrame" src="" title="HeatMap Viewer" style="display:none;"></iframe>
     
     <script>
         // Store the DM data
@@ -181,7 +213,7 @@ title: HeatMaps Index
                 });
                 
                 // Show DSA Rankings button
-                dsaButton.style.display = 'inline-block';
+                dsaButton.style.display = 'block';
             }
         }
         
@@ -195,7 +227,7 @@ title: HeatMaps Index
                 iframe.style.width = '1400px';
                 iframe.style.height = '1400px';
             } else {
-                iframe.style.width = '83%';
+                iframe.style.width = '1000px';
                 iframe.style.height = '1400px';
             }
             
@@ -216,8 +248,8 @@ title: HeatMaps Index
             document.getElementById('welcome').style.display = 'none';
             var iframe = document.getElementById('contentFrame');
             iframe.style.display = 'block';
-            iframe.style.width = '83%';
-            iframe.style.height = '1400px';
+            iframe.style.width = '90%';
+            iframe.style.height = '1300px';
             iframe.src = 'STIIIZYtetris.html';
         }
     </script>
