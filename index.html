@@ -1,7 +1,6 @@
 ---
-layout: default
+layout: page
 title: HeatMaps Index
-remote_theme: daattali/beautiful-jekyll
 ---
 
 <!DOCTYPE html>
@@ -58,7 +57,7 @@ remote_theme: daattali/beautiful-jekyll
         <button onclick="loadPage('Lynwood 5.12.25 Heat Map.html')">Lynwood</button>
         <button onclick="loadPage('Encinitas 5.12.25 Heat Map.html')">Encinitas</button>
         <button onclick="loadPage('EL Centro 5.12.25.html')">EL Centro</button>
-        <button onclick="loadPage('DSAWheelOFunMay25.html')">DSA Rankings</button>
+        <button onclick="loadPage('DSAWheelOFunMay25.html', true)">DSA Rankings</button>
     </nav>
     <div id="welcome">
         <img src="https://static.cannawayz.com/static/brands/000/000/418/avatars/large/1541528123-1511815479-stiiizy.p__1_.jpg" alt="Stiiizy Logo" />
@@ -66,10 +65,20 @@ remote_theme: daattali/beautiful-jekyll
     </div>
     <iframe id="contentFrame" src="" title="HeatMap Viewer" style="display:none;"></iframe>
     <script>
-        function loadPage(page) {
+        function loadPage(page, isDSARankings = false) {
             document.getElementById('welcome').style.display = 'none';
             var iframe = document.getElementById('contentFrame');
             iframe.style.display = 'block';
+            
+            // Set specific size for DSA Rankings
+            if (isDSARankings) {
+                iframe.style.width = '1200px';
+                iframe.style.height = '1200px';
+            } else {
+                iframe.style.width = '83%';
+                iframe.style.height = '1400px';
+            }
+            
             iframe.src = page;
         }
 
@@ -84,6 +93,8 @@ remote_theme: daattali/beautiful-jekyll
             document.getElementById('welcome').style.display = 'none';
             var iframe = document.getElementById('contentFrame');
             iframe.style.display = 'block';
+            iframe.style.width = '83%';
+            iframe.style.height = '1400px';
             iframe.src = 'STIIIZYtetris.html';
         }
     </script>
