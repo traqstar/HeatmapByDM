@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HeatMaps Index</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        iframe { width: 83%; height: 1400px; border: 1px solid #ccc; display: block; margin: 30px auto 0 auto; }
+        nav { margin: 20px 0 40px 0; } /* Added 40px bottom margin for gap */
+        nav button { margin: 5px; padding: 10px 20px; font-size: 16px; }
+        #welcome {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 600px;
+        }
+        #welcome img {
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+        #welcome h2 {
+            font-size: 2em;
+            margin: 0;
+        }
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            z-index: 1000;
+        }
+        .secret-button {
+            background: none;
+            border: none;
+            color: inherit;
+            font: inherit;
+            cursor: pointer;
+            padding: 0;
+            display: inline;
+        }
+        .secret-button:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <button class="home-button" onclick="goHome()">Home</button>
+    <h1>HeatMaps - Regional Set</h1>
+    <nav>
+        <button onclick="loadPage('Vista 5.12.25 Heatmap.html')">Vista</button>
+        <button onclick="loadPage('Lynwood 5.12.25 Heat Map.html')">Lynwood</button>
+        <button onclick="loadPage('Encinitas 5.12.25 Heat Map.html')">Encinitas</button>
+        <button onclick="loadPage('EL Centro 5.12.25.html')">EL Centro</button>
+        <button onclick="loadPage('DSAWheelOFunMay25.html')">DSA Rankings</button>
+    </nav>
+    <div id="welcome">
+        <img src="https://static.cannawayz.com/static/brands/000/000/418/avatars/large/1541528123-1511815479-stiiizy.p__1_.jpg" alt="Stiiizy Logo" />
+        <h2>HEATMAPS By <button class="secret-button" onclick="loadTetris()">KEVIN KUHN</button> (& Carter B)</h2>
+    </div>
+    <iframe id="contentFrame" src="" title="HeatMap Viewer" style="display:none;"></iframe>
+    <script>
+        function loadPage(page) {
+            document.getElementById('welcome').style.display = 'none';
+            var iframe = document.getElementById('contentFrame');
+            iframe.style.display = 'block';
+            iframe.src = page;
+        }
+
+        function goHome() {
+            document.getElementById('welcome').style.display = 'flex';
+            var iframe = document.getElementById('contentFrame');
+            iframe.style.display = 'none';
+            iframe.src = '';
+        }
+
+        function loadTetris() {
+            document.getElementById('welcome').style.display = 'none';
+            var iframe = document.getElementById('contentFrame');
+            iframe.style.display = 'block';
+            iframe.src = 'STIIIZYtetris.html';
+        }
+    </script>
+</body>
+</html>
