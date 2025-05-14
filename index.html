@@ -107,15 +107,14 @@ title: HeatMaps Index
                 .then(data => {
                     // Parse CSV
                     const rows = data.split('\n');
-                    const headers = rows[0].split(',');
                     
                     // Create DM data structure
                     for (let i = 1; i < rows.length; i++) {
                         if (rows[i].trim() === '') continue;
                         
                         const values = rows[i].split(',');
-                        const dmName = values[0].trim();
-                        const storeName = values[1].trim();
+                        const storeName = values[0].trim();
+                        const dmName = values[1].trim();
                         
                         // Check if DM already exists in our data
                         let dmIndex = dmData.findIndex(dm => dm.name === dmName);
