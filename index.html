@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title: HeatMaps Index
 ---
 
@@ -13,8 +13,6 @@ title: HeatMaps Index
             text-align: center;
             margin: 0;
             padding: 0;
-            background-color: #fff;
-            color: #333;
         }
         .container {
             width: 100%;
@@ -36,15 +34,15 @@ title: HeatMaps Index
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 400px; /* Reduced height to decrease space */
+            height: 400px;
         }
         #welcome img {
-            max-width: 400px; /* Reduced image size */
-            margin-bottom: 20px; /* Reduced margin */
+            max-width: 400px;
+            margin-bottom: 20px;
         }
         #welcome h2 {
-            font-size: 1.8em;
-            margin: 0 0 20px 0; /* Added bottom margin */
+            font-size: 2em;
+            margin: 0 0 20px 0;
         }
         .home-button {
             position: fixed;
@@ -118,6 +116,12 @@ title: HeatMaps Index
         h1, h2 {
             color: #333;
         }
+        .footer {
+            margin-top: 20px;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -143,6 +147,10 @@ title: HeatMaps Index
                 <h2>HEATMAPS By <button class="secret-button" onclick="loadTetris()">KEVIN KUHN</button> (& Carter B)</h2>
             </div>
             <iframe id="contentFrame" src="" title="HeatMap Viewer" style="display:none;"></iframe>
+            
+            <div class="footer">
+                HeatmapByDM | by Kevin Kuhn
+            </div>
         </div>
     </div>
     
@@ -158,7 +166,12 @@ title: HeatMaps Index
         // Function to load and parse the CSV file
         function loadDMData() {
             fetch('DMlist.csv')
-                .then(response => response.text())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok: ' + response.statusText);
+                    }
+                    return response.text();
+                })
                 .then(data => {
                     // Parse CSV
                     const rows = data.split('\n');
@@ -168,6 +181,8 @@ title: HeatMaps Index
                         if (rows[i].trim() === '') continue;
                         
                         const values = rows[i].split(',');
+                        if (values.length < 2) continue; // Skip invalid rows
+                        
                         const storeName = values[0].trim();
                         const dmName = values[1].trim();
                         
@@ -191,7 +206,7 @@ title: HeatMaps Index
                 })
                 .catch(error => {
                     console.error('Error loading DM data:', error);
-                    alert('Error loading DM data. Please check the console for details.');
+                    alert('Error loading DM data: ' + error.message);
                 });
         }
         
@@ -271,7 +286,7 @@ title: HeatMaps Index
             document.getElementById('welcome').style.display = 'none';
             var iframe = document.getElementById('contentFrame');
             iframe.style.display = 'block';
-            iframe.style.width = '95%';
+            iframe.style.width = '90%';
             iframe.style.height = '1000px';
             iframe.src = 'STIIIZYtetris.html';
         }
