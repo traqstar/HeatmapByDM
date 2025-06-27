@@ -40,18 +40,14 @@
             font-size: 16px;
             box-shadow: 0 0 10px rgba(0,100,0,0.3);
         }
-        
-        /* Cannabis leaf icon next to HOME button */
         .home-button::before {
             content: "🍁";
             margin-right: 5px;
         }
-        
         .home-button:hover {
             background-color: #45a049;
             transform: scale(1.05);
         }
-        
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -133,22 +129,16 @@
             color: #6c757d;
             font-size: 14px;
         }
-        
-        /* Fix for the Stiiizy image and DSA button overlap */
         #welcome-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 50px; /* Add space below welcome section */
+            margin-bottom: 50px;
         }
-        
-        /* Logo in header */
         .site-logo {
             height: 40px;
             margin-right: 10px;
         }
-        
-        /* Clear separation between elements */
         .section {
             margin-bottom: 30px;
             clear: both;
@@ -163,45 +153,41 @@
     </div>
 
     <div class="container">
-        
         <div class="section selection-area">
             <label for="dm-selector">Select District Manager:</label>
             <select id="dm-selector" onchange="loadDMStores()">
                 <option value="">-- Select DM --</option>
-                <!-- DM options will be loaded here -->
             </select>
         </div>
-        
+
         <div id="store-buttons" class="section"></div>
-        
+
         <div class="section">
             <button id="dsa-button" class="dsa-button" onclick="loadPage('DSAWheelOFunJune25.html', true)" style="display: none;">DSA Rankings</button>
         </div>
-        
+
         <div id="welcome-container" class="section">
             <div id="welcome">
                 <img src="https://static.cannawayz.com/static/brands/000/000/418/avatars/large/1541528123-1511815479-stiiizy.p__1_.jpg" alt="Stiiizy Logo">
                 <h2>HEATMAPS By <button class="secret-button" onclick="loadTetris()">KEVIN KUHN</button> (& Carter B)</h2>
             </div>
         </div>
-        
+
         <iframe id="contentFrame" src="" style="display:none;"></iframe>
-        
+        <img id="imageViewer" style="display:none; max-width:100%; margin-top:20px;" alt="Store Heatmap">
+
         <div class="footer">
             HeatmapByDM | by Kevin Kuhn
         </div>
     </div>
 
     <script>
-        // Store the DM data
         let dmData = [];
-        
-        // Load the CSV file when the page loads
+
         window.onload = function() {
             loadDMData();
         };
-        
-        // Function to load and parse the CSV file
+
         function loadDMData() {
             fetch('DMlist.csv')
                 .then(response => {
@@ -211,35 +197,25 @@
                     return response.text();
                 })
                 .then(data => {
-                    // Parse CSV
                     const rows = data.split('\n');
-                    
-                    // Create DM data structure
                     for (let i = 1; i < rows.length; i++) {
                         if (rows[i].trim() === '') continue;
-                        
                         const values = rows[i].split(',');
-                        if (values.length < 2) continue; // Skip invalid rows
-                        
+                        if (values.length < 2) continue;
+
                         const storeName = values[0].trim();
                         const dmName = values[1].trim();
-                        
-                        // Check if DM already exists in our data
+
                         let dmIndex = dmData.findIndex(dm => dm.name === dmName);
-                        
                         if (dmIndex === -1) {
-                            // Add new DM
                             dmData.push({
                                 name: dmName,
                                 stores: [storeName]
                             });
                         } else {
-                            // Add store to existing DM
                             dmData[dmIndex].stores.push(storeName);
                         }
                     }
-                    
-                    // Populate the DM dropdown
                     populateDMDropdown();
                 })
                 .catch(error => {
@@ -247,11 +223,9 @@
                     alert('Error loading DM data: ' + error.message);
                 });
         }
-        
-        // Function to populate the DM dropdown
+
         function populateDMDropdown() {
             const selector = document.getElementById('dm-selector');
-            
             dmData.forEach(dm => {
                 const option = document.createElement('option');
                 option.value = dm.name;
@@ -259,55 +233,51 @@
                 selector.appendChild(option);
             });
         }
-        
-        // Function to load stores for selected DM
+
         function loadDMStores() {
             const dmName = document.getElementById('dm-selector').value;
             const storeButtonsDiv = document.getElementById('store-buttons');
             const dsaButton = document.getElementById('dsa-button');
-            
-            // Clear existing buttons
+
             storeButtonsDiv.innerHTML = '';
-            
             if (dmName === '') {
                 dsaButton.style.display = 'none';
                 return;
             }
-            
-            // Find the selected DM
+
             const selectedDM = dmData.find(dm => dm.name === dmName);
-            
             if (selectedDM) {
-                // Create buttons for each store
                 selectedDM.stores.forEach(store => {
                     const button = document.createElement('button');
                     button.textContent = store;
                     button.onclick = function() {
-                        loadPage(`${store}.html`);
+                        loadPage(`${store}.png`);
                     };
                     storeButtonsDiv.appendChild(button);
                 });
-                
-                // Show DSA Rankings button
                 dsaButton.style.display = 'block';
             }
         }
-        
+
         function loadPage(page, isDSARankings = false) {
             document.getElementById('welcome-container').style.display = 'none';
-            var iframe = document.getElementById('contentFrame');
-            iframe.style.display = 'block';
-            
-            // Set specific size for DSA Rankings
-            if (isDSARankings) {
-                iframe.style.width = '1300px';
-                iframe.style.height = '1300px';
+
+            const iframe = document.getElementById('contentFrame');
+            const imageViewer = document.getElementById('imageViewer');
+
+            if (page.endsWith('.png')) {
+                iframe.style.display = 'none';
+                iframe.src = '';
+                imageViewer.src = page;
+                imageViewer.style.display = 'block';
             } else {
-                iframe.style.width = '1000px';
-                iframe.style.height = '1400px';
+                imageViewer.style.display = 'none';
+                imageViewer.src = '';
+                iframe.style.display = 'block';
+                iframe.src = page;
+                iframe.style.width = isDSARankings ? '1300px' : '1000px';
+                iframe.style.height = isDSARankings ? '1300px' : '1400px';
             }
-            
-            iframe.src = page;
         }
 
         function goHome() {
@@ -315,14 +285,22 @@
             document.getElementById('dm-selector').value = '';
             document.getElementById('store-buttons').innerHTML = '';
             document.getElementById('dsa-button').style.display = 'none';
-            var iframe = document.getElementById('contentFrame');
-            iframe.style.display = 'none';
-            iframe.src = '';
+
+            document.getElementById('contentFrame').style.display = 'none';
+            document.getElementById('contentFrame').src = '';
+
+            document.getElementById('imageViewer').style.display = 'none';
+            document.getElementById('imageViewer').src = '';
         }
 
         function loadTetris() {
             document.getElementById('welcome-container').style.display = 'none';
-            var iframe = document.getElementById('contentFrame');
+            const iframe = document.getElementById('contentFrame');
+            const imageViewer = document.getElementById('imageViewer');
+
+            imageViewer.style.display = 'none';
+            imageViewer.src = '';
+
             iframe.style.display = 'block';
             iframe.style.width = '85%';
             iframe.style.height = '900px';
